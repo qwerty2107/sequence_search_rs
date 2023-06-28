@@ -1,4 +1,4 @@
-use crate::{atgc::ATGC, sequence::Sequence};
+use crate::{atgc::ATGC};
 
 
 

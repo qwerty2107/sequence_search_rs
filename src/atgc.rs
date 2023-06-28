@@ -73,9 +73,9 @@ impl ATGC
                     }
                 }
                 matches_counter = 0;
-                for n in (0..self.length).rev()
+                for (n, m) in (0..self.length).rev().enumerate()
                 {
-                    if Self::apply_template_symbol(self.content[n], target.content[n+start_position])
+                    if Self::apply_template_symbol(self.content[n], target.content[m+start_position])
                     {
                         matches_counter += 1;
                         if matches_counter == self.length

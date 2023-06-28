@@ -1,4 +1,4 @@
-use std::{fs::File, io::{self, BufReader, BufRead}, path::Path};
+use std::{fs::File, io::{BufReader, BufRead}};
 use crate::{atgc::ATGC, sequence::Sequence};
 
 

@@ -5,7 +5,6 @@ mod loader;
 mod pattern;
 mod config;
 
-use atgc::ATGC;
 use config::Config;
 use pattern::Pattern;
 
@@ -14,7 +13,7 @@ fn main()
 {
     let config: Config = Config::get_config("config.txt");
     let sequences: Vec<sequence::Sequence> = loader::read_file(&config.filepath);
-    let mut patterns: Vec<Pattern> = Vec::with_capacity(30000);
+    let mut patterns: Vec<Pattern> = Vec::with_capacity(100000);
     let items_to_process;
     if config.items_to_process == 0
     {items_to_process = sequences.len();}
@@ -48,10 +47,12 @@ fn main()
     patterns.sort_by_key(|pattern| pattern.sequences.len());
     for pattern in patterns.iter()
     {
-        if pattern.sequences.len() > 5
+        if pattern.sequences.len() > 0
         {
             println!("{}  counter: {}", pattern.template.into_string(), pattern.sequences.len());
         }
     }
     println!("Amount of patterns: {}", patterns.len());
+    println!("Completed.");
+    std::io::stdin().read_line(&mut String::new()).unwrap();
 }

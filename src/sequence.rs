@@ -22,7 +22,7 @@ impl Sequence
     ///compares two sequences, not templates
     pub fn compare(&self, patterns: &mut Vec<Pattern>, target: &Self, minimal_similarity: usize)
     {
-        let mut pattern_already_exists: bool = false;
+        let mut pattern_already_exists: bool;
         if self.id != target.id
         {
             match self.content.find_similarity(&target.content, minimal_similarity)
