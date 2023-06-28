@@ -1,0 +1,3 @@
+filepath:hg38_5CtRY.fa.txt
+minimal_similarity:8
+items_to_process:400
