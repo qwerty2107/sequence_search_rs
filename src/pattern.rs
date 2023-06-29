@@ -1,7 +1,7 @@
 use crate::{atgc::ATGC};
 
 
-
+#[derive(Clone)]
 pub struct Pattern
 {
     pub template: ATGC,

@@ -24,6 +24,7 @@ fn main()
     let mut sequences: Vec<sequence::Sequence> = sequences_full.drain(0..items_to_process).collect();
     let sequences_copy = sequences.to_vec();
     println!("comparing sequences:");
+    let mut handles: Vec<thread::JoinHandle<Vec<Pattern>>> = vec![];
     let mut patterns_output: Vec<Pattern> = Vec::with_capacity(2000);
     while sequences.len() > 0
     {
@@ -37,7 +38,7 @@ fn main()
             group = sequences.drain(..).collect();
         }
         let seq_group: Vec<sequence::Sequence> = group.drain(..).collect();
-        patterns_output.append(&mut thread::spawn(move ||
+        let handle: thread::JoinHandle<Vec<Pattern>> = thread::spawn(move ||
         {
             let mut patterns: Vec<Pattern> = Vec::with_capacity(100000);
             for seq_n in 0..seq_group.len()
@@ -63,9 +64,33 @@ fn main()
             patterns.sort_by_key(|pattern| pattern.sequences.len());
             print!(".");
             patterns.drain((&patterns.len()-50)..).collect::<Vec<Pattern>>()
-        }).join().unwrap())
+        });
+        handles.push(handle)
     }
-    println!("Processing groups finished. Counting resulting patterns:");
+    for handle in handles
+    {
+        patterns_output.append(&mut handle.join().unwrap());
+    }
+    println!("Processing groups finished. Removing repetitive patterns...");
+    let patterns_output_copy = patterns_output.to_vec();
+    patterns_output = patterns_output_copy.into_iter().filter(|pattern: &Pattern|
+    {
+        let mut matches_counter: usize = 0;
+        for target_pattern in patterns_output.iter()
+        {
+            if pattern.template.compare(&target_pattern.template)
+            {
+                matches_counter += 1;
+                if matches_counter > 1
+                {
+                    break;
+                }
+            }
+        }
+        if matches_counter <= 1 {true}
+        else {false}
+    }).collect();
+    println!("Counting patterns...");
     for pattern in patterns_output.iter_mut()
     {
         for seq_id in 0..items_to_process
