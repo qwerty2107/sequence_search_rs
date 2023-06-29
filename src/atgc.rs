@@ -1,7 +1,7 @@
 
 
 
-
+#[derive(Clone)]
 pub struct ATGC
 {
     content: Vec<u8>,

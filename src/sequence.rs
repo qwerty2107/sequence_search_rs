@@ -1,6 +1,7 @@
 
 use crate::{atgc::ATGC, pattern::Pattern};
 
+#[derive(Clone)]
 pub struct Sequence
 {
     pub id: usize,

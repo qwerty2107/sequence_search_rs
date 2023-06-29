@@ -1,3 +1,4 @@
-filepath:hg38_5CtRY.fa.txt
-minimal_similarity:7
-items_to_process:10
+filepath: >hg38_5CtRY.fa.txt
+minimal_similarity: >9
+total_items_to_process(0 to process all available): >0
+size_of_comparison_group: >400

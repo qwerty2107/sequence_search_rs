@@ -34,7 +34,6 @@ pub fn read_file(filepath: &str) -> Vec<Sequence>
         }
         counter = 1 - counter;
     }
-
-    return sequences;
+    sequences
 }
 
